@@ -197,3 +197,33 @@ img, svg { flex-shrink: 0; }
 @media (max-width: 640px) {
   .omh-page [style*="display: flex; gap: 4px; align-items: flex-end"] span { font-size: 10px !important; }
 }
+/* mapa compacto do harness: abaixo da largura do desenho, o encaixe é feito pelo script */
+@media (max-width: 1240px) {
+  .omh-zoom { zoom: 1 !important; width: auto !important; }
+}
+.foot-bottom a { color: inherit; }
+/* mapa do harness no celular: a mesma leitura, empilhada */
+.omh-map-mob { display: none; flex-direction: column; gap: 8px; }
+.omh-map-mob .mm-box { border-radius: 14px; padding: 14px 16px; border: 1px solid var(--subtle); background: #fff; display: flex; flex-direction: column; gap: 4px; }
+.omh-map-mob .mm-t { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 600; color: var(--foreground); overflow-wrap: anywhere; }
+.omh-map-mob .mm-s { font-size: 13px; line-height: 18px; color: var(--muted-foreground); }
+.omh-map-mob .mm-src { background: var(--azoxo-100); border-color: var(--azoxo-200); }
+.omh-map-mob .mm-model { background: var(--azoxo-900); border-color: var(--azoxo-900); }
+.omh-map-mob .mm-model .mm-t { color: var(--azoxo-500); font-size: 18px; }
+.omh-map-mob .mm-model .mm-s { color: var(--neutral-300); }
+.omh-map-mob .mm-res { background: var(--azoxo-100); border-color: var(--azoxo-200); }
+.omh-map-mob .mm-code { background: var(--azoxo-500); border-color: var(--azoxo-500); }
+.omh-map-mob .mm-code .mm-s { color: var(--foreground); }
+.omh-map-mob .mm-val { background: var(--neutral-100); }
+.omh-map-mob .mm-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.omh-map-mob .mm-chips span { font-family: var(--font-mono); font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 6px; background: #fff; border: 1px solid var(--subtle); color: var(--foreground); }
+.omh-map-mob .mm-arrow { font-size: 14px; color: var(--azoxo-600); padding-left: 16px; }
+.omh-map-mob .mm-arrow span { font-size: 12px; font-weight: 500; }
+.omh-map-mob .omh-dim { opacity: 0.35; }
+@media (max-width: 640px) {
+  .omh-map-mob { display: flex; }
+  .omh-fit[data-w="1136"] { display: none !important; }
+}
+@media (max-width: 640px) {
+  .omh-page [style*="border-radius: 24px; padding: 32px;"], .omh-page [style*="border-radius: 24px; padding: 24px 32px;"] { padding: 14px !important; }
+}
