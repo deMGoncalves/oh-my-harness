@@ -2,6 +2,10 @@
 
 > A IA já escreve o código. O que falta é o harness que a faz escrever o código certo.
 
+[![Licença: MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-F7DF1E.svg)](LICENSE)
+[![Check site](https://github.com/deMGoncalves/oh-my-harness/actions/workflows/check-site.yml/badge.svg)](https://github.com/deMGoncalves/oh-my-harness/actions/workflows/check-site.yml)
+[![PRs bem-vindos](https://img.shields.io/badge/PRs-bem--vindos-18181B.svg)](CONTRIBUTING.md)
+
 **[Ver o site →](https://demgoncalves.github.io/oh-my-harness/)**
 
 by **deMGoncalves** — um harness para o [Claude Code](https://claude.com/claude-code): o
@@ -14,6 +18,20 @@ Este repositório tem duas partes:
 | ----- | ------- |
 | [`.claude/`](.claude/) | O harness em si — rules, skills, agents, commands e um hook |
 | [`docs/`](docs/) | O site que apresenta e defende a ideia, com as fontes de cada número |
+
+## Usar o harness no seu projeto
+
+O `.claude/` é só uma pasta: copie-a para a raiz do seu repositório e abra o Claude Code ali.
+
+```bash
+git clone https://github.com/deMGoncalves/oh-my-harness.git
+cp -r oh-my-harness/.claude  /caminho/do/seu/projeto/
+```
+
+Depois descreva o que quer em linguagem natural, ou digite `/craft`. Ajuste rules, agents e
+o `settings.json` ao seu stack — algumas rules citam ferramentas (Biome, pnpm, bun) que o
+seu projeto pode não usar. O `.claude/CLAUDE.md` descreve o harness e o repositório de
+origem; reescreva-o para o seu.
 
 ## O problema
 
@@ -71,10 +89,13 @@ HTML puro, sem build e sem dependências: cada página é um arquivo `.html` em 
 npx serve docs            # ou: python3 -m http.server 8080 --directory docs
 ```
 
-### Publicar no GitHub Pages
+### Publicação
 
-Em **Settings → Pages**, escolha **Deploy from a branch**, branch `main`, pasta **`/docs`**.
-O arquivo `docs/.nojekyll` desliga o Jekyll para o GitHub servir os arquivos como estão.
+O site é publicado no GitHub Pages a partir da branch `main`, pasta `/docs` — todo merge em
+`main` atualiza o ar em poucos minutos, sem workflow de deploy. `docs/.nojekyll` desliga o
+Jekyll para os arquivos serem servidos como estão, e `docs/404.html` cobre links antigos.
+
+Para publicar um fork: **Settings → Pages → Deploy from a branch**, `main`, `/docs`.
 
 ### Estilo
 
@@ -83,6 +104,15 @@ Tudo em `docs/assets/style.css`: tokens em `:root` (paleta JavaScript `#F7DF1E` 
 em SVG inline e o responsivo no fim do arquivo. O gutter lateral é `--omh-gx`: 120px a
 1440px, com a coluna de conteúdo fixa em 1200px.
 
+## Contribuindo
+
+Correções e ideias são bem-vindas — leia o [CONTRIBUTING](CONTRIBUTING.md) e o
+[Código de Conduta](CODE_OF_CONDUCT.md). Vulnerabilidades: [SECURITY](SECURITY.md).
+
+```bash
+python3 scripts/check-site.py     # links e assets internos do site
+```
+
 ## Licença
 
-Scaffold sob licença MIT · Templates sob CC-BY-4.0.
+[MIT](LICENSE) © 2026 Cleber de M. Goncalves (deMGoncalves).

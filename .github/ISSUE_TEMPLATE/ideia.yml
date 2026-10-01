@@ -1,0 +1,21 @@
+name: Ideia ou proposta
+description: Nova rule, skill, agent, command, página ou melhoria
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual problema isso resolve
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+      description: Se for artefato do .claude/, diga a camada (rule, skill, agent, command ou hook) e por quê.
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas

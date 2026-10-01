@@ -1,0 +1,24 @@
+name: Erro no site ou no harness
+description: Link quebrado, número errado, layout quebrado, comportamento inesperado do .claude/
+labels: [bug]
+body:
+  - type: input
+    id: onde
+    attributes:
+      label: Onde
+      description: Página do site ou arquivo do .claude/
+      placeholder: docs/evidencias.html
+    validations:
+      required: true
+  - type: textarea
+    id: o-que
+    attributes:
+      label: O que está errado
+      description: O que você viu e o que esperava ver. Se for um número, cole a fonte correta.
+    validations:
+      required: true
+  - type: textarea
+    id: como
+    attributes:
+      label: Como reproduzir
+      description: Navegador e tamanho de tela, se for visual; comando e versão do Claude Code, se for o harness.
