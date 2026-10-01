@@ -1,0 +1,114 @@
+# §7 — Deployment View
+
+**Section:** 7 de 12
+**Audience:** Técnico (DevOps, tech lead, arquiteto)
+**When to update:** Ao mudar plataforma de infraestrutura, ao adicionar novo ambiente, ao alterar pipeline de CI/CD.
+
+---
+
+## Purpose
+
+Esta seção documenta onde e como o sistema é executado: infraestrutura física/cloud, ambientes (dev, staging, prod), mapeamento de componentes para nós de execução, e o pipeline de entrega. Responde à pergunta: "Em que máquina/serviço cada parte roda?"
+
+## Template
+
+```markdown
+# §7 — Deployment View
+
+## Diagrama de Infraestrutura
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                        [Provedor Cloud]                           │
+│                                                                  │
+│  ┌─────────────────────────────────────────────────────────────┐ │
+│  │                    Ambiente: Production                      │ │
+│  │                                                             │ │
+│  │  ┌───────────────────────┐    ┌──────────────────────────┐  │ │
+│  │  │   [Registro npm]      │    │  [CDN sobre o registro]  │  │ │
+│  │  │   [Pacote versionado] │───►│  [Entrega ao navegador]  │  │ │
+│  │  │                       │    │                          │  │ │
+│  │  │  - [Bundle ESM]       │    │  [Versão pinada]         │  │ │
+│  │  │  - [Folha de tokens]  │    └──────────────────────────┘  │ │
+│  │  └───────────────────────┘                                   │ │
+│  │                 │                                            │ │
+│  │                 ▼                                            │ │
+│  │  ┌───────────────────────┐    ┌──────────────────────────┐  │ │
+│  │  │  [Site de docs]       │    │  [Navegador do           │  │ │
+│  │  │  [Hospedagem estática]│    │   consumidor]            │  │ │
+│  │  └───────────────────────┘    └──────────────────────────┘  │ │
+│  └─────────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+## Mapeamento: Componentes → Nós de Execução
+
+| Componente | Nó de Execução | Tecnologia | Região |
+|------------|----------------|------------|--------|
+| Pacote publicado | [ex: npm `@escopo/nome`] | [ex: módulo ESM] | [ex: registro público] |
+| Entrega ao navegador | [ex: jsDelivr] | [ex: CDN sobre o npm] | [ex: global] |
+| Site de documentação | [ex: GitHub Pages] | [ex: estático] | [ex: global] |
+| Publicação | [ex: GitHub Actions] | [ex: workflow em push] | [ex: efêmero] |
+| Execução | [ex: navegador do consumidor] | [ex: fora do nosso controle] | [ex: onde o usuário estiver] |
+
+## Ambientes
+
+| Ambiente | URL / Endpoint | Banco | Propósito |
+|----------|---------------|-------|-----------|
+| **Desenvolvimento** | `localhost:3000` | SQLite local | Desenvolvimento e testes unitários |
+| **Staging** | `[URL staging]` | [Banco isolado] | Testes de integração e homologação |
+| **Produção** | `[URL prod]` | [Banco prod] | Usuários finais |
+
+## Pipeline de Entrega (CI/CD)
+
+```
+[Push / PR]
+     │
+     ▼
+[Lint + Typecheck]  ←── falha → bloqueia merge
+     │
+     ▼
+[Testes unitários]  ←── falha → bloqueia merge
+     │
+     ▼
+[Build]             ←── falha → bloqueia deploy
+     │
+     ▼
+[Deploy Staging]    ←── automático em merge para main
+     │
+     ▼
+[Testes E2E]        ←── falha → rollback automático
+     │
+     ▼
+[Deploy Produção]   ←── manual ou automático (definir)
+```
+
+## Configuração de Ambiente
+
+| Variável | Ambiente | Descrição | Origem |
+|----------|----------|-----------|--------|
+| `DATABASE_URL` | Todos | String de conexão com o banco | Secret manager |
+| `API_KEY_[SERVICO]` | Prod/Staging | Chave da API externa | Secret manager |
+| `LOG_LEVEL` | Todos | Nível de log (info/debug/error) | Env var |
+| `NODE_ENV` | Todos | Ambiente de execução | Plataforma |
+```
+
+## Conventions
+
+- Secrets nunca em código — sempre via variáveis de ambiente (regra 030 e 042)
+- Ambientes de staging e produção devem ser isolados (banco separado)
+- Pipeline de CI/CD é obrigatório — deploy manual em produção é proibido
+- Diagrama deve refletir a infraestrutura real, não a desejada
+
+## Related to
+
+- [06_runtime_view.md](06_runtime_view.md): complementa — §6 mostra o fluxo; §7 mostra onde ele executa
+- [rule 046 Port Binding](../../twelve-factor/references/07-port-binding.md): complementa — serviço deve se auto-configurar via porta
+- [rule 047 Concorrência via Processos](../../twelve-factor/references/08-concurrency.md): complementa — stateless permite horizontal scaling
+- [rule 045 Processos Stateless](../../twelve-factor/references/06-processes.md): complementa — nós de execução devem ser stateless
+- [rule 030 Funções Inseguras](../../clean-code/references/security.md): complementa — secrets via env, nunca hardcoded
+
+---
+
+**Arc42 Section:** §7
+**Source:** arc42.org — arc42 Template, adaptado para pt-BR
