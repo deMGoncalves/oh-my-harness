@@ -5,6 +5,7 @@ Obrigado por querer ajudar. Este repositório tem duas partes, e cada uma tem o 
 | Parte | O que é | Como contribuir |
 | ----- | ------- | --------------- |
 | [`docs/`](docs/) | O site (HTML puro, sem build) | Edite o `.html` e rode a checagem de links |
+| [`design/`](design/) | O protótipo do site (`prototipo.html`, autocontido) | Só referência; o site de verdade é o `docs/` |
 | [`.claude/`](.claude/) | O harness: rules, skills, agents, commands, hook | Siga a forma de cada camada (veja abaixo) |
 
 ## Antes de começar

@@ -18,6 +18,7 @@ Este repositório tem duas partes:
 | ----- | ------- |
 | [`.claude/`](.claude/) | O harness em si — rules, skills, agents, commands e um hook |
 | [`docs/`](docs/) | O site que apresenta e defende a ideia, com as fontes de cada número |
+| [`design/`](design/) | O protótipo de design de onde o site saiu (`prototipo.html`, arquivo único) — não é publicado |
 
 ## Usar o harness no seu projeto
 
